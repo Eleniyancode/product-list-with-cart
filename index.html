@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Product list with cart</title>
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Desserts</h1>
+        <div class="product-div"></div>
+      </section>
+
+      <section>
+
+        <div class="cart ">
+          <h2>Your Cart (<span id="cart-active-quantity"></span>)</h2>
+
+          <div class="cart-inactive">
+            <img
+            src="./assets/images/illustration-empty-cart.svg"
+            alt="illustration-empty-cart"
+          />
+          <p>Your added items will appear here</p>
+          </div>
+          
+          <div class="cart-active">
+            <div class="cart-items">
+
+            </div>
+            
+          </div>
+          <div class="total-div">
+              <p class="item-total">
+                <span>Order Total</span>
+                <span class="cart-items-total"></span>
+              </p>
+
+              <div class="carbon-netral">
+                <img
+                  src="./assets/images/icon-carbon-neutral.svg"
+                  alt="icon-carbon-neutral"
+                />
+                <p>This is a <span>carbon-netral</span> delivery</p>
+              </div>
+              <button class="button-confirm-order">Confirm Order</button>
+            </div>
+        </div>
+      </section>
+
+      <section class=" modal hidden order-checkout">
+        <div>
+          <img src="./assets/images/icon-order-confirmed.svg" alt="icon-order-confirmed">
+          <h1>Order Confirmed</h1>
+          <p>We hope you enjoy your food!</p>
+
+          <div class="order">
+            
+          </div>
+            
+          
+          <p class="item-total">
+                <span>Order Total</span>
+                <span class="order-items-total"></span>
+              </p>
+          <button class="button-confirm-order new-order">Start New Order</button>
+        </div>
+
+      </section>
+    </main>
+
+
+
+    <div class="overlay hidden"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
