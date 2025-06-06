@@ -176,6 +176,12 @@ h1 {
     gap: 1rem;
 }
 
+.item-ordered {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
 .cart-item-amount {
     color: hsl(14, 86%, 42%);
     margin-right: 1rem;
@@ -244,16 +250,32 @@ h1 {
     color: white;
     border-radius: 50px;
 }
+
+
+.order-checkout h1 {
+    margin: unset;
+    margin-top: 1rem;
+}
+
+.order-checkout-p {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
 .order {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+    margin-block: 1rem;
+    background-color: hsl(20, 50%, 98%);
+    padding: 2rem;
 }
 
 .order-item {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 2rem;
-    /* justify-content: space-between; */
+    justify-content: space-between !important;
 }
 
 .order-item img {
@@ -262,16 +284,63 @@ h1 {
     height: 4rem;
     border-radius: 5px;
 }
-.item-div {
+
+.order-item-text {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    font-size: 1.4rem;
+}
+.item-div {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* row-gap: 5rem; */
+}
+
+.item-total {
+    margin-block: 1rem;
+    font-size: 1.4rem;
 }
 
 .order-items-total {
     font-size: 2.4rem;
     font-weight: bolder;
     color: hsl(14, 65%, 9%);
+}
+
+.order-total {
+    font-size: 1.4rem;
+}
+
+/* Active state styles */
+button {
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: white;
+}
+
+.button-confirm-order:hover {
+    background-color: rgb(167, 41, 2);
+}
+
+.cart-button-remove:hover {
+    border-color: hsl(14, 25%, 72%);
+    transform: scale(1.5);
+}
+
+.cart-count img:hover {
+    background-color: rgb(167, 41, 2);
+}
+
+.count-img:hover {
+    background-color: white;
+}
+
+.cart-button:hover {
+    border: 1px solid rgb(167, 41, 2);
+    color: rgb(167, 41, 2);
 }
 
 /* CLASSES TO MAKE MODAL WORK */
@@ -284,9 +353,10 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70%;
+  width: 50%;
   background-color: white;
-  padding: 6rem;
+  padding-block: 3rem;
+  padding-inline: 6rem;
   border-radius: 5px;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
   z-index: 10;

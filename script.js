@@ -16,6 +16,14 @@ let cart = [];
 // let count = 0;
 let productData;
 
+const formatcur = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+};
+
+//functions
 //adding product to the cart
 const addToCart = function (products, cart) {
   const cartButtons = document.querySelectorAll(".button");
@@ -25,11 +33,14 @@ const addToCart = function (products, cart) {
       const clicked = e.target;
       const cartButton = clicked.closest(".cart-button");
       const btnContainer = cartButton.closest(".cart-button-divs");
+      const productDiv = btnContainer.closest('.product');
+      const productImage = productDiv.querySelector('img');
+      productImage.style.border = '2px solid red';
       const addToCountBtn = btnContainer.querySelector(".cart-button-count");
       const countEl = addToCountBtn.querySelector("#count");
       const product = products[index];
       // console.log(product);
-      product.amount = 0;
+      product.amount = 1;
 
       if (!clicked) return;
 
@@ -65,7 +76,6 @@ const addToCart = function (products, cart) {
           countEl.textContent = count;
           product.amount = count;
           displayCart(cart);
-          // displayOrder()
         }
       });
 
@@ -88,7 +98,6 @@ const addToCart = function (products, cart) {
             countEl.textContent = count;
             product.amount = count;
             displayCart(cart);
-            // displayOrder();
           }
         }
       });
@@ -101,7 +110,11 @@ const displayCart = function (cart) {
   // console.log(cart);
 
   //displaying the cart quantity
-  cartLength.textContent = cart.length;
+  let totalAmount = 0
+  cart.forEach(c => {
+    return totalAmount += c.amount
+  })
+  cartLength.textContent = totalAmount;
   let cartHTML = cart.map((c) => {
     let html = `
             <div class="cart-item-details">
@@ -109,10 +122,10 @@ const displayCart = function (cart) {
                 <p id="cart-item-name">${c.name}</p>
                 <p class="cart-item-price-details">
                   <span class="cart-item-amount">${c.amount}x</span>
-                  <span class="cart-item-price">@ $${c.price}</span>
-                  <span class="cart-item-total-price">$${Number(
+                  <span class="cart-item-price">@ ${formatcur(c.price, 'en-US', 'USD')}</span>
+                  <span class="cart-item-total-price">${formatcur(Number(
                     c.amount * c.price
-                  )}</span>
+                  ), 'en-US', 'USD')}</span>
                 </p>
               </div>
 
@@ -140,26 +153,16 @@ const displayCart = function (cart) {
     total += num;
   });
 
-  cartTotal.textContent = `$${total}`;
+  cartTotal.textContent = `${formatcur(total, 'en-US', 'USD')}`;
   const totalEl = document.querySelector(".order-items-total");
-  totalEl.textContent = `$${total}`;
-  // removeFromCart(cart, total, totalEl)
-  // console.log(total);
+  totalEl.textContent = `${formatcur(total, 'en-US', 'USD')}`;
 
   //removing from cart functionality
   const btnRemove = document.querySelectorAll(".cart-button-remove");
-  let newTotal;
-  // console.log(cart);
-
-  btnRemove.forEach((btn, i) => {
+  console.log(btnRemove);
+  btnRemove.forEach((btn, i, b) => {
     btn.addEventListener("click", function () {
-      cart.pop(cart[i]);
-      console.log(cart);
-      // newTotal = total - (cart[i].price * cart[i].amount)
-      // console.log(newTotal);
-      // console.log(totalEl);
-      // console.log(cartTotal);
-      // cartTotal.textContent = `$${newTotal}`;
+      cart.splice(i, 1);
       displayCart(cart);
     });
   });
@@ -172,22 +175,26 @@ const displayOrder = function () {
     let html = `
           <div class="item-div">
               <div class="order-item ">
+              <div class="item-ordered">
               <img src="${c.image.thumbnail}"/>
-                <div class="item">
-                <p id="cart-item-name">${c.name}</p>
+              <div class="order-item-text">
+              <p id="cart-item-name">${c.name}</p>
                 <p class="cart-item-price-details">
                   <span class="cart-item-amount">${c.amount}x</span>
-                  <span class="cart-item-price">@ $${c.price}</span>  
+                  <span class="cart-item-price">@ ${formatcur(c.price, 'en-US', 'USD')}</span>  
                 </p>
-                </div>
-                <div>
+              </div>
+                
+                </div>              
+            <div>
                 <p class="order-total">
-                  <span class="item-total-price">$${Number(
+                  <span class="item-total-price">${formatcur(Number(
                     c.amount * c.price
-                  )}</span>
+                  ), 'en-US', 'USD')}</span>
                 </p>
-              </div>              
-            </div>
+              </div>
+                </div>
+             
           </div
     `;
 
@@ -206,8 +213,6 @@ const displayOrder = function () {
     total += num;
   });
 
-  // document.querySelector(".item-total-price").textContent = `$${total}`;
-  // console.log(total);
 };
 
 //fetching the product list from the data.json
@@ -254,17 +259,24 @@ const displayProducts = function (productData) {
 
               <button class="cart-button hidden cart-button-count">
                 <p class="cart-count">
-                  <img
+                <span class="count-img">
+                <img
                   class="decrement-button btn"
                     src="./assets/images/icon-decrement-quantity.svg"
                     alt=""
                   />
+                </span>
+                  
                   <span id="count"></span>
+
+                  <span class="count-img">
                   <img
-                    class="increment-button"
+                    class="increment-button btn"
                     src="./assets/images/icon-increment-quantity.svg"
                     alt=""
                   />
+                  </span>
+                  
                 </p>
               </button>
             </div>           
@@ -272,7 +284,7 @@ const displayProducts = function (productData) {
             <div class="product-description">
             <p class="product-name">${d.category}</p>
             <p class="product-title">${d.name}</p>
-            <p class="product-price">$${d.price}</p>
+            <p class="product-price">${formatcur(d.price, 'en-US', 'USD')}</p>
           </div>
         </div>  
         `;
